@@ -1,0 +1,8 @@
+- name: Setup Jenkins, Docker, and OpenShift CLI
+  hosts: servers
+  become: true
+  roles:
+    - docker_role
+    - oc_role
+    - jenkins_role
+    

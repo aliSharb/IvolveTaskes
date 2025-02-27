@@ -1,0 +1,21 @@
+---
+- name: Install OpenShift CLI
+  become: true
+  block:
+    - name: Download OpenShift CLI
+      get_url:
+        url: "https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz"
+        dest: "/tmp/oc.tar.gz"
+
+    - name: Extract OpenShift CLI
+      unarchive:
+        src: "/tmp/oc.tar.gz"
+        dest: "/usr/local/bin"
+        remote_src: true
+
+    - name: Verify OpenShift CLI Installation
+      command: oc version
+      register: oc_version
+
+    - debug:
+        msg: "Installed OpenShift CLI version: {{ oc_version.stdout }}"
