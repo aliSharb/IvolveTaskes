@@ -35,6 +35,7 @@ This lab guides you through the process of:
 ```bash
 #!/bin/bash
 sudo apt update -y
+sudo apt upgrade -y
 sudo apt install -y nginx
 echo "<h1>Welcome to Nginx Server - $(hostname)</h1>" | sudo tee /var/www/html/index.html
 sudo systemctl start nginx
