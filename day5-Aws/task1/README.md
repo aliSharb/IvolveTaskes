@@ -104,10 +104,10 @@ aws iam list-groups
 
 
 ---
-[Billing Alarm](Budgets.png)
-[IAM Groups](Groups.png)
-[List Users Using AWS CLI](listUserCLI.png)
-[List Groups Using AWS CLI](listGroupCLI.png)
-[dev-user can access EC2](devShowEc2.png)
-[dev-user can not access s3](devShowS3.png)
+![Billing Alarm Screenshot](Budgets.png)
+![IAM Groups Configuration](Groups.png)
+![List of Users via AWS CLI](listUserCLI.png)
+![List of Groups via AWS CLI](listGroupCLI.png)
+![dev-user accessing EC2](devShowEc2.png)
+![dev-user denied access to S3](devShowS3.png)
 
