@@ -101,7 +101,7 @@ aws iam list-groups
    - Try launching an instance (should be allowed).
 3. Navigate to **S3**:
    - Try creating a bucket (should be denied).
-4. Take **screenshots**.
+
 
 ---
 [Billing Alarm](Budgets.png)
