@@ -5,16 +5,7 @@ Create an AWS account, set a billing alarm, create IAM groups (admin and develop
 
 ---
 
-## 1. Create an AWS Account
-1. Go to [AWS Signup](https://aws.amazon.com/)
-2. Click **Create an AWS account** and follow the instructions.
-3. Provide billing details and verify identity.
-4. Choose the **Free Tier plan**.
-5. Sign in to the AWS Management Console.
-
----
-
-## 2. Set a Billing Alarm
+## 1. Set a Billing Alarm
 1. Go to **AWS Billing Dashboard** → **Budgets**.
 2. Click **Create a Budget**.
 3. Select **Cost budget** and set a limit (e.g., `$5`).
@@ -23,7 +14,7 @@ Create an AWS account, set a billing alarm, create IAM groups (admin and develop
 
 ---
 
-## 3. Create IAM Groups
+## 2. Create IAM Groups
 
 ### Create "admin-group" (Full Admin Access)
 1. Go to **AWS IAM** → **User Groups** → **Create Group**.
@@ -39,7 +30,7 @@ Create an AWS account, set a billing alarm, create IAM groups (admin and develop
 
 ---
 
-## 4. Create IAM Users
+## 3. Create IAM Users
 
 ### Create "admin-1" (Console Access Only + MFA)
 1. Go to **IAM** → **Users** → **Create User**.
@@ -72,7 +63,7 @@ Create an AWS account, set a billing alarm, create IAM groups (admin and develop
 
 ---
 
-## 5. List Users & Groups Using AWS CLI
+## 4. List Users & Groups Using AWS CLI
 
 ### Install AWS CLI
 ```sh
@@ -104,7 +95,7 @@ aws iam list-groups
 
 ---
 
-## 6. Verify Dev-User Access to EC2 & S3
+## 5. Verify Dev-User Access to EC2 & S3
 1. Sign in as `dev-user`.
 2. Navigate to **EC2**:
    - Try launching an instance (should be allowed).
