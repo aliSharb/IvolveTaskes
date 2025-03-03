@@ -104,6 +104,10 @@ aws iam list-groups
 4. Take **screenshots**.
 
 ---
-
-
+[Billing Alarm](Budgets.png)
+[IAM Groups](Groups.png)
+[List Users Using AWS CLI](listUserCLI.png)
+[List Groups Using AWS CLI](listGroupCLI.png)
+[dev-user can access EC2](devShowEc2.png)
+[dev-user can not access s3](devShowS3.png)
 
