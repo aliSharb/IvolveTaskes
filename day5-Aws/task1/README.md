@@ -109,9 +109,14 @@ aws iam list-groups
 Here are the screenshots demonstrating the execution:
 
 1. **Billing Alarm** ![Billing Alarm Screenshot](Budgets.png)
+
 2. **IAM Groups** ![IAM Groups](Groups.png)
+
 3. **List of Users via AWS CLI**![List of Users via AWS CLI](listUserCLI.png)
+
 4. **List of Groups via AWS CLI**![List of Groups via AWS CLI](listGroupCLI.png)
+
 5. **dev-user accessing EC2**![dev-user accessing EC2](devShowEc2.png)
+
 6. **dev-user denied access to S3** ![dev-user denied access to S3](devShowS3.png)
 
