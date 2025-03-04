@@ -97,10 +97,11 @@ aws iam list-groups
 
 ## 5. Verify Dev-User Access to EC2 & S3
 1. Sign in as `dev-user`.
+
 2. Navigate to **EC2**:
-   - Try launching an instance (should be allowed).
+
 3. Navigate to **S3**:
-   - Try creating a bucket (should be denied).
+
 
 
 ---
