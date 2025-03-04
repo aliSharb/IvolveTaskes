@@ -81,8 +81,7 @@ Here are the screenshots demonstrating the execution:
 
 4. **enable versioning**![versioning-enabled](versioning-enabled.png)
 
-6. **dev-user accessing EC2**![log.png](log.png)
+6. **Create a logging bucket && Enable logging**![log.png](log.png)
 
-6. **Create a logging bucket && Enable logging** ![dev-user denied access to S3](devShowS3.png)
 
 
