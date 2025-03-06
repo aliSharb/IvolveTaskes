@@ -80,5 +80,5 @@ Here are the screenshots demonstrating the execution:
 
 5. **vpc created**![vpc created](./screen-shot/vpc.png)
 
-6. **Destroy**![Destroy](./screen-shots/Destroy-all.png)
+6. **Destroy**![Destroy](./screen-shot/Destroy-all.png)
 
