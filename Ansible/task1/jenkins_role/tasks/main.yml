@@ -1,0 +1,42 @@
+---
+- name: Install Java (JDK 17)
+  apt:
+    name: openjdk-17-jdk
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Add Jenkins GPG Key
+  get_url:
+    url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+    dest: /usr/share/keyrings/jenkins-keyring.asc
+    mode: '0644'
+  become: true
+
+- name: Add Jenkins Repository
+  shell: echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" > /etc/apt/sources.list.d/jenkins.list
+  become: true
+
+- name: Install Jenkins
+  apt:
+    name: jenkins
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Start and enable Jenkins
+  systemd:
+    name: jenkins
+    enabled: yes
+    state: started
+  become: true
+
+- name: Open port 8080 in UFW
+  command: ufw allow 8080/tcp
+  ignore_errors: true
+  become: true
+
+- name: Reload UFW to apply changes
+  command: ufw reload
+  ignore_errors: true
+  become: true

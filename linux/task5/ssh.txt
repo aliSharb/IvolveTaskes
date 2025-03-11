@@ -1,0 +1,42 @@
+# SSH Configuration Guide
+
+## Overview
+This guide explains how to set up an SSH alias for connecting to an AWS EC2 instance with a simplified command.
+
+## Prerequisites
+- A private key file  `id_rsa`  stored in `~/.ssh/`.
+
+## Steps to Configure SSH Alias
+
+### Step 1: Open the SSH Config File
+Run the following command to open (or create) the SSH config file:
+
+```bash
+nano ~/.ssh/config
+```
+
+### Step 2: Add SSH Configuration
+Add the following block at the end of the file:
+
+```ini
+Host ivolve
+    HostName 34.203.31.221
+    User ubuntu
+    IdentityFile ~/.ssh/id_rsa
+```
+
+### Step 3: Set Correct File Permissions
+To ensure security, restrict access to the SSH config file:
+
+```bash
+chmod 600 ~/.ssh/config
+```
+
+### Step 5: Test SSH Connection
+
+```RUN command
+ssh ivolve
+```
+
+This will automatically use the correct username, private key, and IP address.
+

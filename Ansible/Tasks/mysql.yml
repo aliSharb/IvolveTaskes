@@ -1,0 +1,56 @@
+---
+- name: Install and Configure MySQL
+  hosts: data_servers
+  become: yes
+  vars_files:
+    - secrets.yml
+
+  tasks:
+
+    - name: Ensure required packages are installed
+      apt:
+        name:
+          - python3-pymysql
+          - python3
+        state: present
+        update_cache: yes
+
+    - name: Install MySQL Server
+      apt:
+        name: mysql-server
+        state: present
+        update_cache: yes
+
+    - name: Start MySQL Service
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+
+    - name: Set MySQL root password and allow password login
+      become: true
+      shell: |
+        mysql -u root <<EOF
+        ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '{{ mysql_root_password }}';
+        FLUSH PRIVILEGES;
+        EOF
+      args:
+        executable: /bin/bash
+
+    - name: Create ivolve Database
+      mysql_db:
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+        name: ivolve
+        state: present
+
+    - name: Create ivolve User with Full Privileges
+      mysql_user:
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+        name: "{{ mysql_user }}"
+        password: "{{ mysql_user_password }}"
+        priv: "ivolve.*:ALL"
+        host: "%"
+        state: present
+      no_log: true

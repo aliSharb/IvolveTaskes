@@ -1,0 +1,31 @@
+---
+- name: Configure Web Server
+  hosts: web_servers
+  become: yes
+  tasks:
+
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+
+    - name: Start and Enable Apache Service
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Deploy Custom Web Page
+      copy:
+        content: "<h1>Welcome to My Web Server</h1>"
+        dest: /var/www/html/index.html
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Allow HTTP Traffic in Firewall
+      ufw:
+        rule: allow
+        port: 80
+        proto: tcp

@@ -1,0 +1,83 @@
+# AWS Load Balancer Setup (Lab 13)
+
+## Objective
+This lab guides you through the process of:
+- Creating a **VPC** with two subnets.
+- Launching **two EC2 instances** running **Ubuntu**, one with **Nginx** and the other with **Apache**.
+- Configuring an **Application Load Balancer** to distribute traffic between the web servers.
+
+## Prerequisites
+- An **AWS account**.
+- Basic understanding of AWS **EC2, VPC, and Load Balancers**.
+- AWS CLI (optional, for automation).
+
+---
+
+## Step 1: Create a VPC and Subnets
+1. **Go to AWS Console** → **VPC**.
+2. **Create a VPC** (e.g., `MyVPC`).
+3. **Create two subnets** in different availability zones.
+4. **Create an Internet Gateway** and attach it to the VPC.
+5. **Create a Route Table**, associate the subnets, and add a route to `0.0.0.0/0` via the Internet Gateway.
+
+---
+
+## Step 2: Launch Two EC2 Instances
+### **Common EC2 Configuration**
+- AMI: **Ubuntu 22.04 LTS**
+- Instance Type: **t2.micro**
+- Security Group:
+  - Allow **HTTP (80)** from anywhere (`0.0.0.0/0`).
+  - Allow **SSH (22)** only from your IP.
+- Assign **each instance** to a **different subnet**.
+
+### **Instance 1 (Nginx) - User Data Script**
+```bash
+#!/bin/bash
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt install -y nginx
+echo "<h1>Welcome to Nginx Server - $(hostname)</h1>" | sudo tee /var/www/html/index.html
+sudo systemctl start nginx
+sudo systemctl enable nginx
+```
+
+### **Instance 2 (Apache) - User Data Script**
+```bash
+#!/bin/bash
+sudo apt update -y
+sudo apt install -y apache2
+echo "<h1>Welcome to Apache Server - $(hostname)</h1>" | sudo tee /var/www/html/index.html
+sudo systemctl start apache2
+sudo systemctl enable apache2
+```
+
+---
+
+## Step 3: Create an Application Load Balancer
+1. **Go to AWS Console** → **Load Balancers** → **Create Load Balancer**.
+2. Select **Application Load Balancer**.
+3. Configure:
+   - **Name**: `mybalancer`
+   - **Scheme**: Internet-facing
+   - **Listeners**: HTTP (80)
+   - **VPC**: Select your VPC.
+   - **Availability Zones**: Select both subnets.
+4. **Create a Target Group**:
+   - Target Type: **Instance**
+   - Protocol: **HTTP (80)**
+   - Health Check Path: `/`
+5. **Register Targets**:
+   - Add both EC2 instances to the target group.
+6. **Create and Test**:
+   - Copy the Load Balancer DNS name from AWS.
+   - Open in a browser: `http://mybalancer-1252377314.us-east-1.elb.amazonaws.com`.
+
+---
+
+## Expected Result
+- The Load Balancer distributes traffic between the **Nginx** and **Apache** servers.
+- Refreshing the page alternates between the two servers' responses.
+
+
+

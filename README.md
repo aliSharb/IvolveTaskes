@@ -1,0 +1,1 @@
+This repository contains tasks and exercises completed during my DevOps training. The tasks cover various aspects of DevOps, including automation, CI/CD, containerization, infrastructure as code (IaC), and cloud services.

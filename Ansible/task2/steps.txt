@@ -1,0 +1,20 @@
+Task
+Ansible Dynamic Inventories
+Objective: Set up Ansible dynamic inventories to automatically discover and manage
+infrastructure. Use Ansible Galaxy role to install Apache.
+
+steps
+ Install boto3 and botocore for AWS Inventory
+   sudo apt install -y python3-boto3 python3-botocore
+
+ Verify Installation
+   python3 -c "import boto3; print(boto3.__version__)"
+
+ Install the amazon.aws Collection
+    ansible-galaxy collection install amazon.aws
+
+Configure AWS Credentials
+     ~/.aws/credentials
+
+Run the playbook using the dynamic inventory
+    ansible-playbook -i aws_ec2.yml install_apache.yml
