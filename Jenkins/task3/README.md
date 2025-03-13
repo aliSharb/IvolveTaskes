@@ -26,3 +26,17 @@ docker exec -it jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 - Enter the password in the Jenkins UI and proceed with setup.
 - Install recommended plugins.
 - Create an admin user.
+
+4. **Configure Kubernetes Access in Jenkins**
+
+```sh
+scp ubuntu@y35.172.72.12:~/.kube/config ~/.kube/config
+```
+5. **Configure Kubernetes Access in Jenkins**
+- add creditonal of docker hup
+
+6. **clone github.com repository**
+
+```sh
+ git clone https://github.com/IbrahimAdell/App1.git
+```
