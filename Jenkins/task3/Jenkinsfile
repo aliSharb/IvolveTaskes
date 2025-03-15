@@ -14,7 +14,7 @@ pipeline {
             if [ -d "App1" ]; then
                 rm -rf App1
             fi
-            git clone https://github.com/IbrahimAdell/App1.git
+            git clone https://github.com/aliSharb/App1
             '''
             
                 }
