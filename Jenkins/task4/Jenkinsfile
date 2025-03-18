@@ -1,0 +1,91 @@
+@Library('shared-lib-jenkins') _
+
+pipeline {
+   agent {
+        label 'slave1'
+    }
+    environment {
+        REPO_URL = "https://github.com/aliSharb/App3.git"
+        BRANCH = "main"  
+        APP_DIR = "App3"  
+        TEST_DIR = "${APP_DIR}/src/test/java/com/example"
+        DOCKER_IMAGE = "alisharb/my-app:latest"
+        DOCKER_CREDENTIALS_ID = "docker-hub-credentials"
+        KUBE_CONFIG_PATH = "/root/.kube/config"
+        KUBE_NAMESPACE = "default"
+        KUBE_DEPLOYMENT_FILE = "${APP_DIR}/deployment.yaml"
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                script {
+                    sh "rm -rf ${APP_DIR}" // Clean workspace
+                    sh "git clone -b ${BRANCH} ${REPO_URL} ${APP_DIR}"
+                    sh "ls -la ${APP_DIR}"  // Debugging: Check repo contents
+                }
+            }
+        }
+
+        stage('Run Unit Tests') {
+            steps {
+                script {
+                    RunUnitTest(APP_DIR)
+                }
+            }
+        }
+
+        stage('Build Application') {
+            steps {
+                script {
+                    buildApp(APP_DIR)
+                    sh "ls -la ${APP_DIR}/target" // Verify JAR file exists
+                }
+            }
+        }
+
+        stage('Build & Push Docker Image') {
+            steps {
+                script {
+                    sh "echo '🔍 Checking if Docker is running...'"
+                    sh "docker info || (echo '❌ Docker is not running!'; exit 1)"
+
+                    sh "ls -la ${APP_DIR}" // Debugging: Check directory contents
+
+                    if (!fileExists("${APP_DIR}/Dockerfile")) {
+                        error("🚨 ERROR: Dockerfile not found in ${APP_DIR}")
+                    }
+
+                    // Ensure we are in the correct directory
+                    sh "echo '📂 Current Directory: ' && pwd"
+
+                    // Build Docker Image with explicit context
+                    sh "docker build -t ${DOCKER_IMAGE} ${WORKSPACE}/${APP_DIR}"
+
+                    // Push Docker Image to Docker Hub
+                    withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                        sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin"
+                        sh "docker push ${DOCKER_IMAGE}"
+                    }
+
+                    // Clean up local Docker Image
+                    sh "docker rmi ${DOCKER_IMAGE} || echo '⚠️ Failed to remove local image, skipping...'"
+                }
+            }
+        }
+
+        stage('Deploy on Kubernetes') {
+            steps {
+                script {
+                    deployOnK8s(KUBE_CONFIG_PATH, KUBE_NAMESPACE, KUBE_DEPLOYMENT_FILE, BUILD_TAG)
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Pipeline execution completed."
+        }
+    }
+}
