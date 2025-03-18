@@ -38,7 +38,7 @@ In this lab, we will set up a Jenkins slave, use shared libraries, and create a 
 
 ## Step 3: Create a Shared Library
 1. Create a shared library repository.
-2. Structure it with `vars/`, `resources/`, and `src/` folders.
+2. Structure it with `vars/`.
 3. Add reusable Groovy scripts for each pipeline stage.
 
 ## Step 4: Configure Jenkins to Use Shared Library
